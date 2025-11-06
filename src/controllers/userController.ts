@@ -1,4 +1,33 @@
 import { Request, Response } from 'express';
+import User from '../models/User';
+
+export const addUserAction = async (req: Request, res: Response) => {
+    try{
+    // Pegando os dados da requisição e coloando no newUser
+    let newUser = new User();
+    newUser.name = {firstName: req.body.firstName as string, lastName: req.body.lastName as string};
+    newUser.age = parseInt(req.body.age) as number;
+    newUser.email = req.body.email as string;
+    newUser.interests = req.body.interests.split(',') as [string];
+    //salvando o novo registro no banco de dados
+    await newUser.save()
+    //renderizando  os usuario na pagina home exibindo o firtName e age
+    const users = await User.find({}).sort({"name.firstName": 1});
+    res.render('pages/home', {
+        users,
+        mensage: "Usuário adicionado com sucesso"
+    });
+    }catch(error){
+        console.error("Erro ao adicionar usuário", error);
+        const users = await User.find({}).sort({"name.firstName": 1});
+        res.status(500).render('pages/home', {
+            users,
+            erroMensage: "Erro ao adicionar novo usuário, verifique os campos do formlário e tente novamente",
+            //mantem os dados no formulario pra não precisar redigitar tudo
+            formData: req.body
+        });
+    }
+}
 
 export const nome = (req: Request, res: Response) => {
     let nome: string = req.query.nome as string;
