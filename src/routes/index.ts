@@ -8,7 +8,8 @@ import * as UserController from '../controllers/userController';
 const router = Router();
 
 router.get('/', HomeController.home);
-router.post('/novo-usuario', UserController.addUserAction)
+router.post('/novo-usuario', UserController.addUserAction);
+router.get('/usuario/:id/addidade', UserController.incrementAgeAction);
 
 
 router.get('/contato', InfoController.contato);

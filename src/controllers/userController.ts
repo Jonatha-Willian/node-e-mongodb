@@ -27,6 +27,31 @@ export const addUserAction = async (req: Request, res: Response) => {
             formData: req.body
         });
     }
+};
+
+export const incrementAgeAction = async (req: Request, res: Response) => {  
+    try{
+        // Pega o user no BD com base no Parâmetro id passado na url
+        const user = await User.findById(req.params.id);
+        //verifica se user não é nulo e incrementa a idade + 1
+        if(user){
+            const ageImcrement = user.age += 1;
+            user.updateOne({age: ageImcrement});
+            user.save();
+        }
+        const users = await User.find({}).sort({"name.firstName": 1})
+        res.render('pages/home', {
+            users
+        });
+    }catch(error){
+        console.error(error);
+        const users = await User.find({}).sort({"name.firstName": 1})
+        res.render('pages/home', {
+            users,
+            erroMensage: "Não foi possível adicionar um ano a idade deste usuário"
+        });
+    }
+    
 }
 
 export const nome = (req: Request, res: Response) => {

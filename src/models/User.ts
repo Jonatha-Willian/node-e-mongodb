@@ -22,5 +22,5 @@ const schema = new Schema<UserType>({
 //Model name tem de sem iagual ao do Arquivo
 const modelName: string = 'User';
 //Exporta o model User para ser usado em outros arquivos
-export default mongoose.model<UserType>(modelName, schema);;
+export default mongoose.model<UserType>(modelName, schema);
 
