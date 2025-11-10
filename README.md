@@ -1,4 +1,4 @@
-Arquivos do módulo inicial de Node + Typescript, da estrutura MVC aplicada.
+Projeto pessoal para estudos com Node, Express, Mongoose e MongoDB
 
 ### Pré-requisitos globais:
 `npm i -g nodemon typescript ts-node`
